@@ -1,11 +1,9 @@
-<IfModule mod_rewrite.c>
-Options +FollowSymLinks -MultiViews
-
-RewriteEngine On
-RewriteBase /
-
-#index redirect 
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/ 
-RewriteRule ^index\.html$ http://%{HTTP_HOST}/ [R=301,L]
-
-</IfModule>
+ RewriteEngine on
+ 
+ #redirect /file.html to /file
+ RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+ RewriteRule ^ /%1 [NE,L,R]
+ 
+ # now we will internally map /file to/ file.html
+ RewriteCond %{REQUEST_FILENAME}.html -f
+ RewriteRule ^(.*)/?$ /$1.html  [L]
